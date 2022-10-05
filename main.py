@@ -31,13 +31,24 @@ def read_todo(idg):
 read_todo(3)
 
 
-def update_todo(idg, fobj):
-    for todo in fobj:
+def update_todo(idg, file_obj):
+    for todo in file_obj:
         if todo["id"] == idg:
             todo["title"] = todo["title"] + '#'
             print(todo["title"])
 
-    return fobj
+    return file_obj
 
 
 update_todo(23, todos)
+
+
+def delete_todo(idg, file_obj):
+    f = open("todos.json", "w")
+    for todo in file_obj:
+        if todo["id"] == idg:
+            file_obj.remove(todo)
+    json.dump(file_obj, f)
+
+
+delete_todo(24, todos)
