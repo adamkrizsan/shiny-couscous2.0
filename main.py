@@ -51,4 +51,8 @@ def delete_todo(idg, file_obj):
     json.dump(file_obj, f)
 
 
+<<<<<<< HEAD
 delete_todo(24, todos)
+=======
+delete_todo(24, todos)
+>>>>>>> 537d3f4e5eaa71b8b18c57ae82b6aecea497b26d
