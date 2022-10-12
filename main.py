@@ -1,6 +1,4 @@
-from email.utils import parsedate
 import json
-from tokenize import group
 import requests
 
 
@@ -11,39 +9,26 @@ def create_todo():
     response = requests.get(TODO_API_URL)
     with open("todos.json", "w") as f:
         json.dump(response.json(), f)
-    return response.json()
-
-
-todos = create_todo()
 
 
 def read_todo(idg):
     f = open("todos.json", "r")
     todos = json.load(f)
+    f.close()
     group_todos = {}
     for todo in todos:
-        id = todo["userId"]
-        if id not in group_todos:
-            group_todos[id] = []
-        group_todos[id].append(todo)
+        if id == todo["id"]:
+            return todo
 
 
-read_todo(3)
-
-
-def update_todo(idg):
+def update_todo(idg, todou):
     f = open("todos.json", "r")
     todos = json.load(f)
+    f.close()
     for todo in todos:
         if todo["id"] == idg:
-            todo["title"] = todo["title"] + '#'
-            todo_u = todo["title"]
-            print(todo["title"])
-
-    return todo_u
-
-
-update_todo(23)
+            todo = todou
+    return todos
 
 
 def delete_todo(idg):
@@ -55,6 +40,19 @@ def delete_todo(idg):
         if todo["id"] == idg:
             todos.remove(todo)
     json.dump(todos, f)
+    f.close()
 
 
-delete_todo(24)
+if __name__ == "__main__":
+    create_todo()
+    read_todo(5)
+    delete_todo(10)
+
+    example_updated_todo = {
+        "userId": 1,
+        "id": 1,
+        "title": "delectus aut autem",
+        "completed": False
+    }
+
+    update_todo(24, example_updated_todo)
